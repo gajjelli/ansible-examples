@@ -1,0 +1,21 @@
+--- # This is structural YAML exmple to install HTTPD on CentOS7 servers
+- hosts: centos
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    username: myuser
+  tasks:
+  - name: Install HTTPD server on CentOS7 servers
+    yum: 
+      name: httpd
+      state: latest
+    notify:
+    - startservice
+  handlers:
+  - name: startservice
+    service:
+      name: httpd
+      state: restarted
